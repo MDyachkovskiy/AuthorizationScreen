@@ -1,11 +1,15 @@
 package com.test.application.login_screen
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
 import com.test.application.core.domain.LoginResponse
 import com.test.application.core.utils.AppState
 import com.test.application.core.utils.LoginError
@@ -33,6 +37,23 @@ class FragmentLogin : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initEditText()
+        setupTextChangeListeners()
+    }
+
+    private fun setupTextChangeListeners() {
+        binding.etLogin.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                resetFieldColor(binding.etLayoutLogin)
+                resetFieldColor(binding.etLayoutPassword)
+            }
+        }
+
+        binding.etPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                resetFieldColor(binding.etLayoutLogin)
+                resetFieldColor(binding.etLayoutPassword)
+            }
+        }
     }
 
     private fun initEditText() {
@@ -94,7 +115,11 @@ class FragmentLogin : Fragment() {
             is LoginException -> {
                 when(error.error) {
                     LoginError.BodyNull -> getString(com.test.application.core.R.string.error_body_null)
-                    LoginError.LoginFailed -> getString(com.test.application.core.R.string.error_login_failed)
+                    LoginError.LoginFailed -> {
+                        setFieldErrorColor(binding.etLayoutLogin)
+                        setFieldErrorColor(binding.etLayoutPassword)
+                        getString(com.test.application.core.R.string.error_login_failed)
+                    }
                     is LoginError.UnknownError -> getString(com.test.application.core.R.string.error_unknown)
                 }
             }
@@ -103,5 +128,20 @@ class FragmentLogin : Fragment() {
             }
         }
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun setFieldErrorColor(textInputLayout: TextInputLayout) {
+        val alertColor = ContextCompat
+            .getColor(
+                requireContext(),
+                com.test.application.core.R.color.edit_text_alert
+            )
+        val backgroundColor = ColorUtils
+            .setAlphaComponent(alertColor, 38)
+        textInputLayout.boxBackgroundColor = backgroundColor
+    }
+
+    private fun resetFieldColor(textInputLayout: TextInputLayout) {
+        textInputLayout.boxBackgroundColor = Color.TRANSPARENT
     }
 }

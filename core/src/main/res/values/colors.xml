@@ -2,4 +2,5 @@
 <resources>
     <color name="secondary_color">#828796</color>
     <color name="progress_bar_color">#0D72FF</color>
+    <color name="edit_text_alert">#EB5757</color>
 </resources>
