@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="secondary_color">#828796</color>
     <color name="progress_bar_color">#0D72FF</color>
     <color name="edit_text_alert">#EB5757</color>
+    <color name="transaction_time_text_color">#828796</color>
+    <color name="payment_amount_text_color">#60B29C</color>
 </resources>

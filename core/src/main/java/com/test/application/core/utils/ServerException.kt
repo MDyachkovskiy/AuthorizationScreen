@@ -1,5 +1,5 @@
 package com.test.application.core.utils
 
-class LoginException(
-    val error: LoginError
+class ServerException(
+    val error: ServerError
 ) : Exception()

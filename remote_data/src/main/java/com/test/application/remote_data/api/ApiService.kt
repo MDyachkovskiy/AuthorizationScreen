@@ -1,7 +1,7 @@
 package com.test.application.remote_data.api
 
 import com.test.application.remote_data.dto.login.LoginResponseDTO
-import com.test.application.remote_data.dto.payments.PaymentDTO
+import com.test.application.remote_data.dto.payments.PaymentsResponseDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,5 +20,5 @@ interface ApiService {
     @GET("/payments")
     suspend fun getPayments(
         @Header("token") token: String
-    ): Response<List<PaymentDTO>>
+    ): Response<PaymentsResponseDTO>
 }

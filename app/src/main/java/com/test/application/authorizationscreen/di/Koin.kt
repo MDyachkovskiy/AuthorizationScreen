@@ -1,9 +1,12 @@
 package com.test.application.authorizationscreen.di
 
 import com.test.application.core.repository.LoginRepository
+import com.test.application.core.repository.PaymentsRepository
 import com.test.application.login_screen.LoginViewModel
+import com.test.application.payments_screen.PaymentsViewModel
 import com.test.application.remote_data.repository.LoginRepositoryImpl
 import com.test.application.remote_data.api.ApiService
+import com.test.application.remote_data.repository.PaymentsRepositoryImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -24,8 +27,10 @@ val networkModule = module {
 
 val repositoryModule = module {
     single<LoginRepository> { LoginRepositoryImpl(get()) }
+    single<PaymentsRepository> { PaymentsRepositoryImpl(get()) }
 }
 
 val viewModelModule = module {
     viewModel {LoginViewModel(get())}
+    viewModel {PaymentsViewModel(get())}
 }

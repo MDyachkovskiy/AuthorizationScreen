@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="payment_fragment_title">
+        <item name="android:textSize">@dimen/text_size_22sp</item>
+        <item name="fontFamily">@font/doppio_one</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineHeight">26.4dp</item>
+    </style>
+
+    <style name="transaction_time_style">
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/transaction_time_text_color</item>
+        <item name="fontFamily">@font/doppio_one</item>
+        <item name="android:lineHeight">19.2dp</item>
+    </style>
+
+    <style name="payment_title_style">
+        <item name="android:textSize">@dimen/text_size_22sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/doppio_one</item>
+        <item name="android:lineHeight">26.4dp</item>
+    </style>
+
+    <style name="payment_amount_style">
+        <item name="android:textSize">@dimen/text_size_30sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/doppio_one</item>
+        <item name="android:lineHeight">36dp</item>
+    </style>
+
+</resources>

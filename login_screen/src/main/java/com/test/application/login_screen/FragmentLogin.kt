@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.test.application.core.domain.LoginResponse
 import com.test.application.core.utils.AppState
-import com.test.application.core.utils.LoginError
-import com.test.application.core.utils.LoginException
+import com.test.application.core.utils.ServerError
+import com.test.application.core.utils.ServerException
 import com.test.application.login_screen.databinding.FragmentLoginBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -74,6 +74,7 @@ class FragmentLogin : Fragment() {
                     showLoading()
                 }
                 is AppState.Success -> {
+                    hideLoading()
                     navigateToPaymentsScreen(state.data)
                 }
                 is AppState.Error -> {
@@ -112,15 +113,15 @@ class FragmentLogin : Fragment() {
     private fun showError(error: Throwable) {
         hideLoading()
         val message = when(error) {
-            is LoginException -> {
+            is ServerException -> {
                 when(error.error) {
-                    LoginError.BodyNull -> getString(com.test.application.core.R.string.error_body_null)
-                    LoginError.LoginFailed -> {
+                    ServerError.BodyNull -> getString(com.test.application.core.R.string.error_body_null)
+                    ServerError.LoginFailed -> {
                         setFieldErrorColor(binding.etLayoutLogin)
                         setFieldErrorColor(binding.etLayoutPassword)
                         getString(com.test.application.core.R.string.error_login_failed)
                     }
-                    is LoginError.UnknownError -> getString(com.test.application.core.R.string.error_unknown)
+                    is ServerError.UnknownError -> getString(com.test.application.core.R.string.error_unknown)
                 }
             }
             else -> {

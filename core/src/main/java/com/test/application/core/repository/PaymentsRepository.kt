@@ -1,5 +1,7 @@
 package com.test.application.core.repository
 
+import com.test.application.core.domain.Payment
+
 interface PaymentsRepository {
-    fun getPayments()
+    suspend fun getPayments(token: String): Result<List<Payment>>
 }
