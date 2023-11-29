@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_login">Логин</string>
+    <string name="profile_edit_password">Пароль</string>
+    <string name="authorisation_button">Авторизоваться</string>
+</resources>

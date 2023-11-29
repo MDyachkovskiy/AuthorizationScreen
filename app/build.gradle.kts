@@ -15,6 +15,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"https://easypay.world/api-test/\"")
+        buildConfigField("String", "APP_KEY", "\"12345\"")
+        buildConfigField("String", "APP_VERSION", "\"1\"")
     }
 
     buildTypes {
@@ -33,15 +36,34 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(project(":core"))
+    implementation(project(":login_screen"))
+    implementation(project(":payments_screen"))
+    implementation(project(":remote_data"))
+    //Kotlin
+    implementation(Kotlin.core)
+    //AndroidX
+    implementation(AndroidX.appcompat)
+    //Design
+    implementation(Design.material)
+    implementation(Design.constraint_layout)
+    //Navigation
+    implementation(Navigation.fragment_ktx)
+    implementation(Navigation.ui_ktx)
+    //Koin
+    implementation(Koin.core)
+    implementation(Koin.android)
+    implementation(Koin.androidx)
+    implementation(Koin.navigation)
+    //Retrofit
+    implementation(Retrofit.main)
+    implementation(Retrofit.gson_convertor)
 }

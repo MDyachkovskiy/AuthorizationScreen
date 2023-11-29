@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Errors
+    <string name="error_body_null">Тело ответа отсутствует</string>
+    <string name="error_login_failed">Ошибка входа</string>
+    <string name="error_unknown">Неизвестная ошибка: %1$s</string>
+    <string name="error_generic">Произошла ошибка</string>
+    <string name="token_is_required">Непредвиденная ошибка авторизации</string>
+    <string name="unknown_date">Неопределяемая дата</string>
+</resources>

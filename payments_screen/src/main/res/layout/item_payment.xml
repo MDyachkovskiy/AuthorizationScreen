@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_8dp_small"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/margin_8dp_small"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/transaction_time_text_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/transaction_time_style"
+                android:id="@+id/tv_transaction_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16dp_medium"
+                android:text="@string/transaction_time_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/payment_title_style"
+                android:id="@+id/tv_payment_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_title_hint"
+                android:layout_marginTop="@dimen/margin_16dp_medium"
+                app:layout_constraintStart_toStartOf="@id/tv_transaction_time"
+                app:layout_constraintTop_toBottomOf="@id/tv_transaction_time" />
+
+            <TextView
+                style="@style/payment_amount_style"
+                android:id="@+id/tv_payment_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp_small"
+                android:layout_marginBottom="@dimen/margin_16dp_medium"
+                android:layout_marginEnd="@dimen/margin_20dp_medium"
+                android:text="@string/payment_amount_hint"
+                android:textColor="@color/payment_amount_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_payment_title"
+                app:layout_constraintBottom_toTopOf="@id/bottom_guideline" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="0dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

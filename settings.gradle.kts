@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "AuthorizationScreen"
 include(":app")
- 
+include(":login_screen")
+include(":payments_screen")
+include(":core")
+include(":remote_data")
