@@ -4,4 +4,5 @@
     <string name="transaction_time_hint">"06.02.2023 11:24"</string>
     <string name="payment_title_hint">"Consulting fee"</string>
     <string name="payment_amount_hint">"12 000"</string>
+    <string name="greetings_text_hint">"Здравствуйте, Михаил!"</string>
 </resources>
