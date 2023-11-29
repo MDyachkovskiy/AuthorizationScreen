@@ -25,7 +25,7 @@ class FragmentLogin : BaseFragment<LoginResponse, FragmentLoginBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        initEditText()
+        initLoginButton()
         setupTextChangeListeners()
     }
 
@@ -45,7 +45,7 @@ class FragmentLogin : BaseFragment<LoginResponse, FragmentLoginBinding>(
         }
     }
 
-    private fun initEditText() {
+    private fun initLoginButton() {
         with(binding) {
             exitButton.setOnClickListener {
                 val login = etLogin.text.toString()

@@ -15,7 +15,7 @@ class PaymentsRepositoryImpl(
             val response = apiService.getPayments(token)
             if (response.isSuccessful) {
                 val body = response.body()
-                if (body != null) {
+                if (body != null && body.success == "true") {
                     Result.success(body.payments.map { it.toDomain() })
                 } else {
                     Result.failure(ServerException(ServerError.BodyNull))

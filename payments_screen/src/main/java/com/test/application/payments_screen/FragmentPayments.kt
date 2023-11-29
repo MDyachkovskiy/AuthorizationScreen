@@ -1,10 +1,9 @@
 package com.test.application.payments_screen
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.domain.Payment
 import com.test.application.core.navigation.Navigator
@@ -29,9 +28,19 @@ class FragmentPayments : BaseFragment<List<Payment>, FragmentPaymentsBinding>(
             showErrorDialog(ServerException(ServerError.TokenMissing))
             return
         }
+        handleBackPressed()
         initViewModel(token)
         initRecyclerView()
         initLogoutButton()
+    }
+
+    private fun handleBackPressed() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as? Navigator)?.navigateFromPaymentsToLoginFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun initLogoutButton() {
@@ -43,7 +52,7 @@ class FragmentPayments : BaseFragment<List<Payment>, FragmentPaymentsBinding>(
     private fun initRecyclerView() {
         val recyclerView = binding.paymentsRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        paymentAdapter = PaymentsAdapter()
+        paymentAdapter = PaymentsAdapter(requireContext())
         recyclerView.adapter = paymentAdapter
     }
 
@@ -63,14 +72,7 @@ class FragmentPayments : BaseFragment<List<Payment>, FragmentPaymentsBinding>(
     }
 
     override fun hideLoading() {
-        progressBar.animate()
-            .alpha(0.0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progressBar.visibility = View.GONE
-                }
-            })
+        binding.progressBar.visibility = View.GONE
     }
 
     override fun setupData(data: List<Payment>) {

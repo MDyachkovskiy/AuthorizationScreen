@@ -1,7 +1,5 @@
 package com.test.application.core.view
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +28,7 @@ abstract class BaseFragment <I, VB : ViewBinding>(
         savedInstanceState: Bundle?
     ): View {
         _binding = inflate.invoke(inflater, container, false)
+        findProgressBar()
         return binding.root
     }
 
@@ -43,7 +42,7 @@ abstract class BaseFragment <I, VB : ViewBinding>(
     protected fun renderData(appState: AppState<I>) {
         when (appState) {
             is AppState.Success<*> -> {
-                showWorkingView()
+                hideLoading()
                 val data = appState.data as I
                 setupData(data)
             }
@@ -63,16 +62,6 @@ abstract class BaseFragment <I, VB : ViewBinding>(
 
     abstract fun setupData(data: I)
 
-    private fun showWorkingView() {
-        progressBar.animate()
-            .alpha(0.0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progressBar.visibility = View.GONE
-                }
-            })
-    }
     open protected fun showErrorDialog(error: Throwable) {
         hideLoading()
         val message = when(error) {
