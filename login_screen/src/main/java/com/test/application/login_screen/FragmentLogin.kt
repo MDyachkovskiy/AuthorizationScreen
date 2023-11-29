@@ -2,38 +2,25 @@ package com.test.application.login_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.test.application.core.domain.LoginResponse
 import com.test.application.core.navigation.Navigator
-import com.test.application.core.utils.AppState
 import com.test.application.core.utils.ServerError
 import com.test.application.core.utils.ServerException
+import com.test.application.core.view.BaseFragment
 import com.test.application.login_screen.databinding.FragmentLoginBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FragmentLogin : Fragment() {
-
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+class FragmentLogin : BaseFragment<LoginResponse, FragmentLoginBinding>(
+    FragmentLoginBinding::inflate
+) {
 
     private val model: LoginViewModel by viewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,29 +53,12 @@ class FragmentLogin : Fragment() {
                 model.loginUser(login, password)
             }
         }
-
     }
 
     private fun initViewModel() {
         model.loginState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AppState.Loading -> {
-                    showLoading()
-                }
-                is AppState.Success -> {
-                    hideLoading()
-                    navigateToPaymentsScreen(state.data)
-                }
-                is AppState.Error -> {
-                    showError(state.message)
-                }
-            }
+            renderData(state)
         }
-    }
-
-    private fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-        setInteraction(false)
     }
 
     private fun setInteraction(enabled: Boolean) {
@@ -97,42 +67,28 @@ class FragmentLogin : Fragment() {
         binding.etPassword.isEnabled = enabled
     }
 
-    private fun hideLoading() {
+    override fun findProgressBar(): FrameLayout {
+        return binding.progressBar
+    }
+
+    override fun showViewLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        setInteraction(false)
+    }
+
+    override fun setupData(data: LoginResponse) {
+        val token = data.response.token
+        navigateToPaymentsScreen(token)
+    }
+
+    override fun hideLoading() {
         binding.progressBar.visibility = View.GONE
         setInteraction(true)
     }
 
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
-
-    private fun navigateToPaymentsScreen(loginResponse: LoginResponse) {
-        val token = loginResponse.response.token
+    private fun navigateToPaymentsScreen(token: String) {
         val bundle = bundleOf("token" to token)
         (activity as? Navigator)?.navigateToPaymentsFragment(bundle)
-    }
-
-    private fun showError(error: Throwable) {
-        hideLoading()
-        val message = when(error) {
-            is ServerException -> {
-                when(error.error) {
-                    ServerError.BodyNull -> getString(com.test.application.core.R.string.error_body_null)
-                    ServerError.LoginFailed -> {
-                        setFieldErrorColor(binding.etLayoutLogin)
-                        setFieldErrorColor(binding.etLayoutPassword)
-                        getString(com.test.application.core.R.string.error_login_failed)
-                    }
-                    is ServerError.UnknownError -> getString(com.test.application.core.R.string.error_unknown)
-                }
-            }
-            else -> {
-                getString(com.test.application.core.R.string.error_generic)
-            }
-        }
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     private fun setFieldErrorColor(textInputLayout: TextInputLayout) {
@@ -148,5 +104,13 @@ class FragmentLogin : Fragment() {
 
     private fun resetFieldColor(textInputLayout: TextInputLayout) {
         textInputLayout.boxBackgroundColor = Color.TRANSPARENT
+    }
+
+    override fun showErrorDialog(error: Throwable) {
+        super.showErrorDialog(error)
+        if(error is ServerException && error.error == ServerError.LoginFailed) {
+            setFieldErrorColor(binding.etLayoutLogin)
+            setFieldErrorColor(binding.etLayoutPassword)
+        }
     }
 }
