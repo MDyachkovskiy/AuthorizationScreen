@@ -38,9 +38,9 @@ android {
 dependencies {
 
     //Kotlin
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation(Kotlin.core)
 
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation(AndroidX.appcompat)
 
 }

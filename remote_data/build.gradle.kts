@@ -36,10 +36,10 @@ dependencies {
 
     implementation(project(":core"))
     //Kotlin
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation(Kotlin.core)
     //AndroidX
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation(AndroidX.appcompat)
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation(Retrofit.main)
+    implementation(Retrofit.gson)
 }
