@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.application.core.domain.Payment
+import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState
 import com.test.application.core.utils.ServerError
 import com.test.application.core.utils.ServerException
@@ -40,6 +41,13 @@ class FragmentPayments : Fragment() {
         }
         initViewModel(token)
         initRecyclerView()
+        initLogoutButton()
+    }
+
+    private fun initLogoutButton() {
+        binding.logoutButton.setOnClickListener {
+            (activity as? Navigator)?.navigateFromPaymentsToLoginFragment()
+        }
     }
 
     private fun initRecyclerView() {

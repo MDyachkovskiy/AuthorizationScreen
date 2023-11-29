@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.test.application.core.domain.LoginResponse
+import com.test.application.core.navigation.Navigator
 import com.test.application.core.utils.AppState
 import com.test.application.core.utils.ServerError
 import com.test.application.core.utils.ServerException
@@ -107,7 +109,9 @@ class FragmentLogin : Fragment() {
     }
 
     private fun navigateToPaymentsScreen(loginResponse: LoginResponse) {
-
+        val token = loginResponse.response.token
+        val bundle = bundleOf("token" to token)
+        (activity as? Navigator)?.navigateToPaymentsFragment(bundle)
     }
 
     private fun showError(error: Throwable) {
